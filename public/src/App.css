@@ -1,0 +1,25 @@
+.banner_Containar{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.form_Container{
+  margin-right: 140px;
+  margin-top: 60px;
+}
+.content-Container{
+  margin-top: 90px;
+  margin-left: 180px;
+  
+}
+.errors{
+ /* background-color: white; */
+  color: red;
+  position: absolute;
+  z-index: 1;
+ border-radius: 5px;
+}
+
+.button1{
+  border: none;
+}
