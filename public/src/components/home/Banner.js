@@ -1,14 +1,15 @@
 import React from 'react'
 import BannerContent from '../home/BannerContent'
 import BookingForm from '../home/BookingForm'
-import background from '../img/banner_bg.png'
+
 import '../../App.css'
-function Banner() {
+function Banner(props) {
   return (
     <div  >
-       <section className='banner_Containar' style={{ backgroundImage: `url(${background})` }}> 
+       <section className='banner_Containar' > 
       <BannerContent/>
       <BookingForm/>
+         
       </section>
     </div>
   )

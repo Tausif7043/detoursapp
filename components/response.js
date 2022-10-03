@@ -1,5 +1,5 @@
 'use strict';
-export default async function response(res, data, msg, code) {
+module.exports = async function response(res, data, msg, code) {
     code = code || 200;
     var header = {
         'message': msg,

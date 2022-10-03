@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-import authClass from '../api/auth';
+const authClass = require('../api/auth');
 router
     .post('/register', function(req, res) {
         return authClass.register(req, res)

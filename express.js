@@ -15,8 +15,11 @@ const jsonParser = bodyParser.json({ limit: 1024 * 1024 * 20, type: 'application
 const urlencodedParser = bodyParser.urlencoded({ extended: true, limit: 1024 * 1024 * 20, type: 'application/x-www-form-urlencoding' })
 
 module.exports = function (app) {
-
-    app.use(cors());
+    const corsOptions = {
+        origin: 'http://localhost:3000',
+        optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+    }
+    app.use(cors(corsOptions));
     app.use(morgan(':method :url :response-time'));
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json({ limit: 1024 * 1024 * 20, type: 'application/json' }));

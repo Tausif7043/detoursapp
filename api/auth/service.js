@@ -1,6 +1,6 @@
 'use strict';
-var model = require('../../models');
-var User = model.users;
+const model = require('../../models');
+const User = model.users;
 class AuthService {
     /**
 	*@CheckUserExist
@@ -9,8 +9,8 @@ class AuthService {
     * @param | email | String | it should be email
     * @param | phoneNumber | Number | it should be phone number
 	**/
-    CheckUserExist(username, email, mobileNo) {
-        return User.findOne({ $or: [{ email: email }, { username: username }, { mobileNo: mobileNo }], deleted: false }).exec();
+    async CheckUserExist(email, phone) { 
+        return User.findOne({ $or: [{ email: email }, { phone: phone }], deleted: false }); 
     }
 
     /**

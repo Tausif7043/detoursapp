@@ -4,13 +4,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserTypes = Object.freeze({
-    Shipper: 'Shipper',
-    Transporter: 'Transporter'
+    Customer: 'Customer',
+    Transporter: 'Transporter',
+    Admin:"Admin"
 });
 const UserSchema = new mongoose.Schema({
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true },
-    username: { type: String },
+    name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, default: '123456' },
     Address: { type: String },
@@ -18,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     profile_image: { type: String },
     aadhar_image: { type: String },
     profileName: { type: String },
-    mobileNo: { type: String },
+    phone: { type: String },
     teleNo: { type: String },
     status: { type: String, enum: ['Active', 'Inactive'], default: 'Active' },
     role_id: { type: Schema.Types.ObjectId, ref: 'Role' },

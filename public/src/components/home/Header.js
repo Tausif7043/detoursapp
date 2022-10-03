@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import MyVerticallyCenteredModal from "./MyVerticallyCenteredModal";
 import { useState } from "react";
 import img from "../img/logo.png";
+import { Link } from 'react-router-dom'
 function Header() {
   const [modalShow, setModalShow] = useState(false);
 
@@ -40,19 +41,22 @@ function Header() {
                   >
                     <ul className="navbar-nav">
                       <li className="nav-item">
-                        <a className="nav-link" href="index.html">
+                        {/* <a className="nav-link" href="index.html">
                           Home
-                        </a>
+                        </a> */}
+                        <Link className="nav-link" to='/' >Home</Link>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" href="about.html">
+                        {/* <a className="nav-link" href="about.html">
                           About
-                        </a>
+                        </a> */}
+                           <Link className="nav-link" to='/about' >About</Link>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" href="packages.html">
-                          packages
-                        </a>
+                        {/* <a className="nav-link" href="packages.html"> */}
+                          
+                        {/* </a> */}
+                        <Link className="nav-link" to='/packages' >packages</Link>
                       </li>
                       <li className="nav-item dropdown">
                         <a
@@ -70,12 +74,15 @@ function Header() {
                           className="dropdown-menu"
                           aria-labelledby="navbarDropdown"
                         >
-                          <a className="dropdown-item" href="blog.html">
+                          {/* <a className="dropdown-item" href="blog.html">
                             Blog
-                          </a>
-                          <a className="dropdown-item" href="single-blog.html">
+                          </a> */}
+                          
+                          <Link className="dropdown-item" to='/blog' >Blog</Link>
+                          {/* <a className="dropdown-item" href="single-blog.html">
                             Single blog
-                          </a>
+                          </a> */}
+                          <Link className="dropdown-item" to='/blogdetail' >Single block</Link>
                         </div>
                       </li>
                       <li className="nav-item dropdown">
@@ -94,21 +101,25 @@ function Header() {
                           className="dropdown-menu"
                           aria-labelledby="navbarDropdown_1"
                         >
-                          <a className="dropdown-item" href="top_place.html">
+                          {/* <a className="dropdown-item" href="top_place.html">
                             top place
-                          </a>
-                          <a className="dropdown-item" href="tour_details.html">
+                          </a> */}
+                          <Link className="dropdown-item" to='/topplace' >Top Place</Link>
+                          {/* <a className="dropdown-item" href="tour_details.html">
                             tour details
-                          </a>
-                          <a className="dropdown-item" href="elements.html">
+                          </a> */}
+                          <Link className="dropdown-item" to='/tourdetail' >Tour Detail</Link>
+                          {/* <a className="dropdown-item" href="elements.html">
                             Elements
-                          </a>
+                          </a> */}
                         </div>
                       </li>
                       <li className="nav-item">
-                        <a className="nav-link" href="contact.html">
+                        {/* <a className="nav-link" href="contact.html">
                           Contact
-                        </a>
+                        </a> */}
+
+                     <Link className="nav-link" to='/contact' >contact</Link>
                       </li>
                     </ul>
                   </div>
