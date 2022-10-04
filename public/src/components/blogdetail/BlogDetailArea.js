@@ -218,7 +218,7 @@ function BlogDetailArea() {
                             <form action="#">
                                 <div className="form-group">
                                     <div className="input-group mb-3">
-                                        <input type="text" className="form-control" placeholder='Search Keyword' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'"/>
+                                        <input type="text" className="form-control" placeholder='Search Keyword' onFocus="this.placeholder = ''" onBlur="this.placeholder = 'Search Keyword'"/>
                                         <div className="input-group-append">
                                             <button className="btn" type="button"><i className="ti-search"></i></button>
                                         </div>
@@ -373,12 +373,12 @@ function BlogDetailArea() {
                         </aside>
                         <aside className="single_sidebar_widget newsletter_widget">
                             <h4 className="widget_title">Newsletter</h4>
-                            <form action="#">
+                            {/* <form action="#">
                                 <div className="form-group">
-                                    <input type="email" className="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required/>
+                                    <input type="email" className="form-control" onFocus="this.placeholder = ''" onBlur="this.placeholder = 'Enter email'" placeholder='Enter email' required/>
                                 </div>
                                 <button className="button rounded-0 primary-bg text-white w-100 btn_1" type="submit">Subscribe</button>
-                            </form>
+                            </form> */}
                         </aside>
                     </div>
                 </div>

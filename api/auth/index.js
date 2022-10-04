@@ -12,7 +12,7 @@ class AuthClass {
         this.registerValidations = {
             name: "required|minLength:2",
             email: 'required|email',
-            Password: 'required',
+            password: 'required',
             phone: 'required|digits:10', 
 
         }
@@ -30,7 +30,7 @@ class AuthClass {
     * @param | req | object | it is express request object
     * @param | res | object | it is express response object
 	**/
-    register(req, res) {
+    async register(req, res) {
         // return sms.generateOTP(otp).then(() => {
         //     let responseUser = {
         //         "user": {
@@ -45,18 +45,15 @@ class AuthClass {
         //     return response(res, { message: 'User registered however OTP sending failed' }, "Error", 422);
         // })
 
-        
-        const validate = new Validator(req.body.user, this.registerValidations);
-        let entity = req.body;
-        // validate.check().then((matched) => {
-        //     if (!matched) {
-        //         return response(res, validate.errors, "Error", 500);
-        //     } else { 
-        //         return service.CheckUserExist(entity.username, entity.email, entity.mobileNo)
-        //     }
-        // })
-        
-        service.CheckUserExist(entity.email, entity.phone).then((exist) => {
+        try {
+            const validate = new Validator(req.body, this.registerValidations);
+            let entity = req.body;
+            // let matched = await validate.check();
+            // if (!matched) {
+            //     return response(res, validate.errors, "Error", 500);
+            // }
+            let exist = await service.CheckUserExist({$or: [{ email: entity.email }, { phone: entity.phone }], deleted: false});
+            console.log("exist", exist);
             if (exist) {
                 console.log("hashIterations, hashLength", hashIterations, hashLength)
                 return response(res, { message: 'User Exist' }, "Error", 500);
@@ -69,27 +66,15 @@ class AuthClass {
                 entity.otp = Math.floor(1000 + Math.random() * 9000);
                 let token = this.generateJWT(entity);
                 console.log("token", token)
-                service.registerUser(entity).then(function (user) {
-                    if (!user) {
-                        return response(res, null, "Failed", 500);
-                    } 
-                    // sms.generateOTP(entity.otp).then(() => {
-                    //     let responseUser = {
-                    //         "user": {
-                    //             "_id": user._id,
-                    //             "username": user.username,
-                    //             "email": user.email,
-                    //             "token": token
-                    //         }
-                    //     }
-                        return response(res, responseUser, "Success", 200);
-                    // }).catch((err) => {
-                    //     return response(res, { message: 'User registered however OTP sending failed' }, "Error", 422);
-                    // })
-
-                });
-            }
-        });
+                let user = await service.registerUser(entity);
+                if (!user) {
+                    return response(res, null, "Failed", 500);
+                } 
+                return response(res, responseUser, "Success", 200);
+            } 
+        } catch(err){
+            console.log(err);
+        }
     }
 
     /**

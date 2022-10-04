@@ -9,8 +9,9 @@ class AuthService {
     * @param | email | String | it should be email
     * @param | phoneNumber | Number | it should be phone number
 	**/
-    async CheckUserExist(email, phone) { 
-        return User.findOne({ $or: [{ email: email }, { phone: phone }], deleted: false }); 
+    async CheckUserExist(condition) { 
+       return User.find(condition).exec(); 
+    //    return query;
     }
 
     /**
@@ -18,8 +19,8 @@ class AuthService {
     * its a function fetch user's data by its username or email or phone number
     * @param | user | Object | User object 
 	**/
-    registerUser(user) {
-        return User.create(user);
+    async registerUser(user) {
+       await User.create(user);
     }
 
     /**
@@ -27,8 +28,8 @@ class AuthService {
     * its a function to verify if user's details by checking the isVerified flag value is true or false 
     * @param | user | Object | User object 
 	**/
-    CheckUserVerified(username, email) {
-        return User.findOne({ $or: [{ email: email }, { username: username }], isVerified: true }).exec();
+    async CheckUserVerified(username, email) {
+       await User.find({ $or: [{ email: email }, { username: username }], isVerified: true }).exec();
     }
 }
 module.exports = new AuthService();

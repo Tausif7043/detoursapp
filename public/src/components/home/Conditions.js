@@ -9,34 +9,30 @@ import {useFormik} from 'formik'
 import {bookingSchema} from "../../schemas"
 
 const initialValues ={
-  email:"",
+  lemail:"",
   lpassword:"",
-  name:"",
-  Remail:"",
-  phone:"",
-  Password:"",
-  confirmPassword:"",
-  condition:""
+ 
 }
 
 function Conditions() {
-  const {values,errors,touched,handleBlur,handleChange,handleSubmit}=  useFormik({
+  const formik=  useFormik({
     initialValues : initialValues,
     validationSchema:bookingSchema,
-    onSubmit:(value)=>{
+    onSubmit:(value,action)=>{
         console.log('submit value',value);
+        action.resetForm();
     }
  })
   return (
     <div >
-    <Form onSubmit={handleSubmit} style={{ marginTop: "40px" }}>
-              <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Control type="email" placeholder="Email" style={errors.email && touched.email ? {border:"2px solid red"}:{}} name="email" id="email" value={values.email} onChange={handleChange} onBlur={handleBlur} />
-                <p className="errors">{errors.email}</p>
+    <Form onSubmit={formik.handleSubmit} style={{ marginTop: "40px" }}>
+              <Form.Group className="mb-3" >
+                <Form.Control type="email" placeholder="Email" style={formik.errors.lemail && formik.touched.lemail ? {border:"2px solid red"}:{}} name="lemail" value={formik.values.lemail} onChange={formik.handleChange}  />
+                { formik.errors.lemail && formik.touched.lemail ? (<p className="errors">{formik.errors.lemail}</p>) : null}
               </Form.Group>
-              <Form.Group className="mb-3 my-4" controlId="formBasicPassword">
-                <Form.Control type="password" name='lpassword' id='lpassword' placeholder="Password" style={errors.lpassword && touched.lpassword ? {border:"2px solid red"}:{}} value={values.lpassword} onChange={handleChange} onBlur={handleBlur} />
-                <p className="errors">{errors.lpassword}</p>
+              <Form.Group className="mb-3 my-4" >
+                <Form.Control type="password" name='lpassword'  placeholder="Password" style={formik.errors.lpassword && formik.touched.lpassword ? {border:"2px solid red"}:{}} value={formik.values.lpassword} onChange={formik.handleChange}  />
+              { formik.errors.lpassword && formik.touched.lpassword ? (<p className="errors">{formik.errors.lpassword}</p>) : null}
               </Form.Group>
 
               <Button

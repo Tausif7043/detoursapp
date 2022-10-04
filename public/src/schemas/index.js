@@ -1,5 +1,14 @@
 import * as  Yup from 'yup'
 import en from '../localization/en'
+
+const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
+
+// phone_number: Yup.string()
+//   .required("required")
+//   .matches(phoneRegExp, 'Phone number is not valid')
+//   .min(10, "to short")
+//   .max(10, "to long"),
 export const bookingSchema = Yup.object({
     destination:Yup.string().min(2).max(25).required("Please enter your destination"),
     // date:Yup.string().min(8).max(8).required("Please enter Date"),
@@ -9,27 +18,26 @@ export const bookingSchema = Yup.object({
     inlineCheckbox:Yup.boolean().oneOf([true],"please check the box").required("Please check the box"),
     inlineCheckbox5:Yup.boolean().oneOf([true],"Please accept travel ticket").required("Please accept travel ticket "),
     inlineRadio:Yup.string().required("Please select transport mode"),
-    email: Yup.string().email('Invalid email').required('Required'),
+    lemail: Yup.string().email('Invalid email').required('Required'),
     lpassword: Yup
-    .string().min(8).required("required"),
+    .string().min(8).required("Required"),
     name:Yup.string().min(2).max(25).required("Required"),
-    Remail: Yup.string().email(en.emailValidation).required('Required'),
-    phone: Yup.number()
-    .typeError("That doesn't look like a phone number")
-    .positive("A phone number can't start with a minus")
-    .integer("A phone number can't include a decimal point")
-    .min(8)
-    .required('A phone number is required'),
-    Password: Yup
+    email: Yup.string().email(en.emailValidation).required('Required'),
+    phone: Yup.string()
+      .required("Required")
+      .matches(phoneRegExp, 'Phone number is not valid')
+      .min(10, "to short")
+      .max(10, "to long"),
+    password: Yup
     .string()
-    .min(8, 'Password must be 8 characters long')
-    .matches(/[0-9]/, 'Password requires a number')
-    .matches(/[a-z]/, 'Password requires a lowercase letter')
-    .matches(/[A-Z]/, 'Password requires an uppercase letter')
-    .matches(/[^\w]/, 'Password requires a symbol').required('Required'),
-    // confirmPassword: Yup
-    // .string()
-    // .oneOf([Yup.ref('pass'), null], 'Must match "password" field value').required('Required'),
+    .min(8, 'Password must be 8 characters long').required('Required')
+    // .matches(/[0-9]/, 'Password requires a number')
+    // .matches(/[a-z]/, 'Password requires a lowercase letter')
+    // .matches(/[A-Z]/, 'Password requires an uppercase letter')
+    // .matches(/[^\w]/, 'Password requires a symbol').required('Required'),
+    ,
+    confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match').required('Required'),
     condition:Yup.boolean().oneOf([true],"Please accept terms & condition ").required("Please accept terms & condition "),
 
 })

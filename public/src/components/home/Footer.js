@@ -30,11 +30,11 @@ function Footer() {
                     <div className="single-footer-widget">
                         <h4>Subscribe Newsletter</h4>
                         <div className="form-wrap" id="mc_embed_signup">
-                            <form target="_blank"
+                            {/* <form target="_blank"
                                 action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
                                 method="get" className="form-inline">
                                 <input className="form-control" name="EMAIL" placeholder="Your Email Address"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '"
+                                    onFocus="this.placeholder = ''" onBlur="this.placeholder = 'Your Email Address '"
                                     required="" type="email"/>
                                 <button className="click-btn btn btn-default text-uppercase"> <i className="far fa-paper-plane"></i>
                                 </button>
@@ -44,7 +44,7 @@ function Footer() {
                                 </div>
 
                                 <div className="info"></div>
-                            </form>
+                            </form> */}
                         </div>
                         <p>Subscribe our newsletter to get update news and offers</p>
                     </div>
@@ -69,7 +69,7 @@ function Footer() {
             <div className="row justify-content-center">
                 <div className="col-lg-12">
                     <div className="copyright_part_text text-center">
-                        <p className="footer-text m-0">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
+                        <p className="footer-text m-0">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i className="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
                     </div>
                 </div>
             </div>

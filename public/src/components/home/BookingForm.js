@@ -17,8 +17,9 @@ function BookingForm() {
  const {values,errors,touched,handleBlur,handleChange,handleSubmit}=  useFormik({
         initialValues : initialValues,
         validationSchema:bookingSchema,
-        onSubmit:(value)=>{
+        onSubmit:(value,action)=>{
             console.log('submit value',value);
+            action.resetForm()
         }
      })
 
@@ -28,53 +29,53 @@ function BookingForm() {
 <form onSubmit={handleSubmit}>
   <div className='check_Box'>
   <div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox" name="inlineCheckbox" id="inlineCheckbox" value={values.inlineCheckbox} onChange={handleChange} onBlur={handleBlur}/>
-  <label className="form-check-label" for="inlineCheckbox">Hotel</label>
+  <input className="form-check-input" type="checkbox" name="inlineCheckbox" id="inlineCheckbox1" value={values.inlineCheckbox} onChange={handleChange} onBlur={handleBlur}/>
+  <label className="form-check-label" htmlFor="inlineCheckbox1">Hotel</label>
 </div>
 <div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox" name="inlineCheckbox" id="inlineCheckbox" value={values.inlineCheckbox} onChange={handleChange} onBlur={handleBlur}/>
-  <label className="form-check-label" for="inlineCheckbox">Car</label>
+  <input className="form-check-input" type="checkbox" name="inlineCheckbox" id="inlineCheckbox2" value={values.inlineCheckbox} onChange={handleChange} onBlur={handleBlur}/>
+  <label className="form-check-label" htmlFor="inlineCheckbox2">Car</label>
 </div>
 <div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox" name="inlineCheckbox" id="inlineCheckbox" value={values.inlineCheckbox} onChange={handleChange} onBlur={handleBlur} />
-  <label className="form-check-label" for="inlineCheckbox">Food</label>
+  <input className="form-check-input" type="checkbox" name="inlineCheckbox" id="inlineCheckbox3" value={values.inlineCheckbox} onChange={handleChange} onBlur={handleBlur} />
+  <label className="form-check-label" htmlFor="inlineCheckbox3">Food</label>
 </div>
 <div className="form-check form-check-inline">
-  <input className="form-check-input" type="checkbox" name="inlineCheckbox" id="inlineCheckbox" value={values.date} onChange={handleChange} onBlur={handleBlur} />
-  <label className="form-check-label" for="inlineCheckbox">SightSeeing</label>
+  <input className="form-check-input" type="checkbox" name="inlineCheckbox" id="inlineCheckbox4" value={values.date} onChange={handleChange} onBlur={handleBlur} />
+  <label className="form-check-label" htmlFor="inlineCheckbox4">SightSeeing</label>
 </div>
 <p className='errors'>{errors.inlineCheckbox}</p>
 <div className='input_Type '>
 <div className="mb-3">
-  <label for="destination" className="form-label">Destination</label>
+  <label htmlFor="destination" className="form-label">Destination</label>
   <input   type="text" className={"form-control"} style={errors.destination && touched.destination ? {border:"2px solid red"}:{}} name='destination' id="destination" value={values.destination} onChange={handleChange} onBlur={handleBlur} />
   <p className='errors' >{errors.destination} </p>
 </div>
 <div className='row'>
 <div className="mb-3 col-7 ">
-  <label for="date" className="form-label">Check-in / Check-Out Dates</label>
+  <label htmlFor="date" className="form-label">Check-in / Check-Out Dates</label>
   <input type="date" className="form-control " name='date' id="date" value={values.date} onChange={handleChange} onBlur={handleBlur} />
 <p className='errors'>{errors.date}</p>
 </div>
 <div className="mb-3 col-5">
-  <label for="no_of_passenger" className="form-label" >No. of Passenger</label>
+  <label htmlFor="no_of_passenger" className="form-label" >No. of Passenger</label>
   <input type="number" className="form-control" style={errors.no_of_passenger && touched.no_of_passenger ? {border:"2px solid red"}:{}} name='no_of_passenger' id="no_of_passenger" value={values.no_of_passenger} onChange={handleChange} onBlur={handleBlur}/>
   <p className='errors'>{errors.no_of_passenger}</p>
 </div>
 </div>
 <div className="form-check form-check-inline">
   <input className="form-check-input" type="checkbox" name='inlineCheckbox5' id="inlineCheckbox5"  value={values.inlineCheckbox5} onChange={handleChange} onBlur={handleBlur} />
-  <label className="form-check-label" for="inlineCheckbox5">Travel Tickets</label>
+  <label className="form-check-label" htmlFor="inlineCheckbox5">Travel Tickets</label>
 </div>
 <p className='errors'>{errors.inlineCheckbox5}</p>
 <div className='row'>
 <div className="mb-3 col-6">
-  <label for="from" className="form-label">From</label>
+  <label htmlFor="from" className="form-label">From</label>
   <input type="text" className="form-control" style={errors.from && touched.from ? {border:"2px solid red"}:{}} name='from' id="from" placeholder='Destination' value={values.from} onChange={handleChange} onBlur={handleBlur} />
 <p className='errors'>{errors.from}</p>
 </div>
 <div className="mb-3 col-6">
-  <label for="to" className="form-label">To</label>
+  <label htmlFor="to" className="form-label">To</label>
   <input type="text" className="form-control" style={errors.to && touched.to ? {border:"2px solid red"}:{}} name='to' id="to" placeholder='Destination' value={values.to} onChange={handleChange} onBlur={handleBlur}/>
 <p className='errors'>{errors.to}</p>
 </div>
@@ -84,15 +85,15 @@ function BookingForm() {
 <div className='check_Radio'>
 <div className="form-check form-check-inline">
   <input className="form-check-input" type="radio" name="inlineRadio" id="inlineRadio" value={values.inlineRadio} onChange={handleChange} onBlur={handleBlur} />
-  <label className="form-check-label" for="inlineRadio">Bus</label>
+  <label className="form-check-label" htmlFor="inlineRadio">Bus</label>
 </div>
 <div className="form-check form-check-inline">
-  <input className="form-check-input" type="radio" name="inlineRadio" id="inlineRadio" value={values.inlineRadio} onChange={handleChange} onBlur={handleBlur} />
-  <label className="form-check-label" for="inlineRadio">Train</label>
+  <input className="form-check-input" type="radio" name="inlineRadio1" id="inlineRadio1" value={values.inlineRadio} onChange={handleChange} onBlur={handleBlur} />
+  <label className="form-check-label" htmlFor="inlineRadio1">Train</label>
 </div>
 <div className="form-check form-check-inline">
-  <input className="form-check-input" type="radio" name="inlineRadio" id="inlineRadio" value={values.inlineRadio} onChange={handleChange} onBlur={handleBlur}/>
-  <label className="form-check-label" for="inlineRadio" >Flight</label>
+  <input className="form-check-input" type="radio" name="inlineRadio2" id="inlineRadio2" value={values.inlineRadio} onChange={handleChange} onBlur={handleBlur}/>
+  <label className="form-check-label" htmlFor="inlineRadio2" >Flight</label>
 </div>
 <p className='errors'>{errors.inlineRadio}</p>
 </div>

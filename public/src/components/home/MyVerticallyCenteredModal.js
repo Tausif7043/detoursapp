@@ -6,18 +6,16 @@ import Form from "react-bootstrap/Form";
 // import rocket from "../src/rocket.png";
 import { IoMdRocket } from "react-icons/io";
 import { useFormik } from "formik";
-
+import axios from "axios";
 import { bookingSchema } from "../../schemas";
 import Conditions from "./Conditions";
 // import {useHistory} from 'react-router-dom'
 
 const initialValues = {
   email: "",
-  lpassword: "",
-  name: "",
-  Remail: "",
-  phone: "",
   password: "",
+  name: "",
+  phone: "",
   confirmPassword: "",
   condition: "",
 };
@@ -26,52 +24,20 @@ function MyVerticallyCenteredModal(props) {
   // const signUp=()=>{
   // const history = useHistory()
   const [user, setUser] = useState({
-      email: "",
-      lpassword: "",
-      name: "",
-      Remail: "",
-      phone: "",
-      Password: "",
-      confirmPassword: "",
-      condition: "",
+    email: "",
+    password: "",
+    name: "",
+    phone: "",
+    confirmPassword: "",
+    condition: "",
   });
 
-  let name, value;
-  const handleInputs = (e) => {
-    console.log(e);
-    name = e.target.name;
-    value = e.target.value;
-    setUser({ ...user, [name]: value });
-  };
-  // }
-
-  let postData = async (e) => {
-    e.preventDefault();
-    const {
-      email,
-      lpassword,
-      name,
-      Remail,
-      phone,
-      Password,
-      confirmPassword,
-      condition,
-    } = user;
-
-    let res = await fetch("http://localhost:4000/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
-    });
-    res = await res.json();
-    if (res.status === 422) {
-      window.alert("invalid registretion");
-      console.log("invalid registretion");
-    } else {
-      window.alert(" registretion successfull");
-      console.log(" registretion successfull");
-      //  history.push("/login")
-    }
+  const postData = () => {
+    axios
+      .post("http://localhost:4000/api/auth/register", user)
+      .then((res) => { 
+      })
+      .catch((err) => console.log(err));
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -79,7 +45,10 @@ function MyVerticallyCenteredModal(props) {
       initialValues: initialValues,
       validationSchema: bookingSchema,
       onSubmit: (value) => {
-        console.log("submit value", value);
+        setUser(value);
+        postData();
+        // actions.setSubmitting(true);
+        // resetForm()
       },
     });
 
@@ -130,12 +99,13 @@ function MyVerticallyCenteredModal(props) {
             </div>
             <div style={{ backgroundColor: "red", padding: 60, width: "50%" }}>
               <h2 style={{ textAlign: "center", color: "white" }}>Register</h2>
+
               <Form
                 method="POST"
                 onSubmit={handleSubmit}
                 style={{ marginTop: "40px" }}
               >
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className="mb-3">
                   <Form.Control
                     type="name"
                     name="name"
@@ -150,26 +120,31 @@ function MyVerticallyCenteredModal(props) {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  <p className="errorsReg">{errors.name}</p>
+                  {errors.name && touched.name ? (
+                    <p className="errorsReg">{errors.name}</p>
+                  ) : null}
                 </Form.Group>
-                <Form.Group className="mb-3 my-4" controlId="formBasicEmail">
+                <Form.Group className="mb-3 my-4">
                   <Form.Control
                     type="email"
                     placeholder="Email Id"
-                    name="Remail"
-                    id="Remail"
-                    value={values.Remail}
+                    name="email"
+                    id="email"
+                    value={values.email}
                     style={
-                      errors.Remail && touched.Remail
+                      errors.email && touched.email
                         ? { border: "2px solid yellow" }
                         : {}
                     }
+                    values={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  <p className="errorsReg">{errors.Remail}</p>
+                  {errors.email && touched.email ? (
+                    <p className="errorsReg">{errors.email}</p>
+                  ) : null}
                 </Form.Group>
-                <Form.Group className="mb-3 my-4" controlId="formBasicEmail">
+                <Form.Group className="mb-3 my-4">
                   <Form.Control
                     type="phone"
                     placeholder="Phone Number"
@@ -184,28 +159,32 @@ function MyVerticallyCenteredModal(props) {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  <p className="errorsReg">{errors.phone}</p>
+                  {errors.phone && touched.phone ? (
+                    <p className="errorsReg">{errors.phone}</p>
+                  ) : null}
                 </Form.Group>
 
-                <Form.Group className="mb-3 my-4" controlId="formBasicPassword">
+                <Form.Group className="mb-3 my-4">
                   <Form.Control
                     type="password"
                     placeholder="Password"
-                    name="Password"
-                    id="Password"
-                    value={values.Password}
+                    name="password"
+                    id="password"
+                    value={values.password}
                     style={
-                      errors.Password && touched.Password
+                      errors.password && touched.password
                         ? { border: "2px solid yellow" }
                         : {}
                     }
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  <p className="errorsReg">{errors.Password}</p>
+                  {errors.password && touched.password ? (
+                    <p className="errorsReg">{errors.password}</p>
+                  ) : null}
                 </Form.Group>
 
-                <Form.Group className="mb-3 my-4" controlId="formBasicPassword">
+                <Form.Group className="mb-3 my-4">
                   <Form.Control
                     type="confirmpassword"
                     placeholder="Confirm Password"
@@ -220,10 +199,12 @@ function MyVerticallyCenteredModal(props) {
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
-                  <p className="errorsReg">{errors.confirmPassword}</p>
+                  {errors.confirmPassword && touched.confirmPassword ? (
+                    <p className="errorsReg">{errors.confirmPassword}</p>
+                  ) : null}
                 </Form.Group>
 
-                <Form.Group className="mb-3 mx-4" controlId="formBasicCheckbox">
+                <Form.Group className="mb-3 mx-4">
                   <Form.Check
                     type="checkbox"
                     name="condition"
@@ -235,13 +216,14 @@ function MyVerticallyCenteredModal(props) {
                   <a className="text-light" onClick={checkCondition}>
                     Terms & Conditions
                   </a>
-                  <p className="errorscondition">{errors.condition}</p>
+                  {errors.condition && touched.condition ? (
+                    <p className="errorscondition">{errors.condition}</p>
+                  ) : null}
                 </Form.Group>
 
                 <Button
                   variant="primary"
                   type="submit"
-                  onClick={postData}
                   style={{
                     width: "150px",
                     color: "red",
