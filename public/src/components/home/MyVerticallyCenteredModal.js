@@ -37,7 +37,7 @@ function MyVerticallyCenteredModal(props) {
       .post("http://localhost:5000/api/auth/register", values)
       .then((res) => { props.setLoginUser(res.data)
         navigate('/', { replace: true })
-        
+        localStorage.setItem('logInData',JSON.stringify(res.data))
       })
       .catch((err) =>{alert(err.message)});
   };

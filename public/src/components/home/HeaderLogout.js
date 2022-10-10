@@ -16,8 +16,8 @@ function HeaderLogout(props) {
         .post("http://localhost:5000/api/auth/logout",log)
         .then((res) => { 
         navigate('/', { replace: true }) 
-        localStorage.removeItem('logInData')
-        // props.setTogle(!props.togle)
+         localStorage.removeItem('logInData')
+       
         window.location.reload()
        })
         .catch((err) => {});

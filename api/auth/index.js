@@ -90,44 +90,7 @@ class AuthClass {
    * @param | req | object | it is express request object
    * @param | res | object | it is express response object
    **/
-  // login(req, res) {
-
-  //     const validate = new Validator(req.body, this.loginValidations);
-  //     let entity = req.body;
-  //    console.log(entity);
-  //     validate.check().then((matched) => {
-  //         if (!matched) {
-  //             return response(res, validate.errors, "Error", 422);
-  //         }
-  //         return service.CheckLoginUserExist(entity.password, entity.email)
-  //     }).then((exist) => {
-  //         if (!exist)
-  //             return response(res, { message: 'Email or password is invalid!' }, "Error", 422);
-  //         return service.CheckUserVerified(entity.password, entity.email)
-  //     }).then((verified) => {
-  //         if (!verified) {
-  //             return response(res, { message: 'User is not verified' }, "Error", 422);
-  //         } else {
-  //             let token = this.generateJWT(verified);
-  //             let password=entity.password
-  //             const passHash = crypto.pbkdf2Sync(password, verified.salt, hashIterations, hashLength, `sha512`).toString(`hex`);
-  //             console.log(passHash);
-  //             if (password === passHash ) {
-  //                 let responseUser = {
-  //                     "user": {
-  //                         "_id": verified._id,
-  //                         "username": verified.username,
-  //                         "email": verified.email,
-  //                         "token": token
-  //                     }
-  //                 }
-  //                 return response(res, responseUser, "Success", 200);
-  //             } else {
-  //                 return response(res, { message: 'Password is incorrect. Please try again' }, "Error", 422);
-  //             }
-  //         }
-  //     })
-  // }
+  
 
   async login(req, res) {
     const validate = new Validator(req.body, this.loginValidations);
@@ -231,7 +194,7 @@ class AuthClass {
 
 
     
-    let conditions =   req.body._id
+    let conditions =  req.body._id
     let update = {
       access_token: "",
       isLoggedIn: false,

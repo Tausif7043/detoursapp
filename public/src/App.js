@@ -25,19 +25,19 @@ function App() {
  
   const [loginUser,setLoginUser] = useState({})
   const [logOut,setLogOut] = useState({})
-  const [togle,setTogle] = useState({})
+  const [loggedIn,setLoggedIn] = useState({})
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("logInData");
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
-      setTogle(foundUser);
+      setLoggedIn(foundUser);
     }
   }, []);
   return (
     <div >
       <BrowserRouter>
-      { loginUser._id ||  togle.token  ? <HeaderLogout logOut={logOut} togle={togle} setTogle={setTogle}/>:
+      { loginUser._id ||  loggedIn._id  ? <HeaderLogout logOut={logOut} />:
       <Header setLoginUser = {setLoginUser} loginUser={loginUser} setLogOut={setLogOut}   />  } 
      
      <Routes>
