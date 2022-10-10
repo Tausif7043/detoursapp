@@ -8,5 +8,8 @@ router
     .post('/login', function(req, res) {
         return authClass.login(req, res)
     })
+    .post('/logout', function(req, res) {
+        return authClass.logout(req, res)
+    })
 
 module.exports = router;

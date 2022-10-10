@@ -1,5 +1,6 @@
 'use strict';
 const model = require('../../models');
+const authClass = require('./index');
 const User = model.users;
 class AuthService {
     /**
@@ -9,10 +10,26 @@ class AuthService {
     * @param | email | String | it should be email
     * @param | phoneNumber | Number | it should be phone number
 	**/
-    async CheckUserExist(condition) { 
-       return User.find(condition).exec(); 
+
+    
+
+    async getUser(condition) { 
+        
+       return User.findOne((condition)); 
+       
+              
     //    return query;
     }
+
+    // async CheckLoginUserExist(condition) { 
+        
+    //     return User.findOne({ $or: [{ condition: condition }]}); 
+        
+               
+    //  //    return query;
+    //  }
+
+  
 
     /**
 	*@registerUser
@@ -20,7 +37,7 @@ class AuthService {
     * @param | user | Object | User object 
 	**/
     async registerUser(user) {
-       await User.create(user);
+     return   User.create(user);
     }
 
     /**
@@ -28,8 +45,20 @@ class AuthService {
     * its a function to verify if user's details by checking the isVerified flag value is true or false 
     * @param | user | Object | User object 
 	**/
-    async CheckUserVerified(username, email) {
-       await User.find({ $or: [{ email: email }, { username: username }], isVerified: true }).exec();
+
+
+    /**
+	*@updateUser
+    * its a function to update the value
+    * @param  | conditions | Object | conditions json object on which data need to be updated
+    * @param  | update | Object | update value of the object
+	**/
+    updateUser(conditions, update) {
+        console.log("Condtion",conditions);
+        console.log("Udatesecond",update);
+        return User.updateMany(conditions, update);
     }
+   
+
 }
 module.exports = new AuthService();

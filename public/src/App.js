@@ -18,15 +18,23 @@ import BlogDetailSection from "./components/blogdetail/BlogDetailSection";
 import BlogDetail from "./pages/BlogDetail";
 import TopPlace from "./pages/TopPlace";
 import TourDetail from "./pages/TourDetail";
-import Conditions from "./components/home/Conditions";
+import {useState} from 'react'
+import HeaderLogout from "./components/home/HeaderLogout";
+
+
 
 function App() {
+ 
+  const [loginUser,setLoginUser] = useState({})
+  const [logOut,setLogOut] = useState({})
+  const [togle,setTogle] = useState(true)
   return (
     <div >
       <BrowserRouter>
-      <Header/>
+      {loginUser._id  && togle ? <HeaderLogout logOut={logOut} togle={togle} setTogle={setTogle}/>:
+      <Header setLoginUser = {setLoginUser} loginUser={loginUser} setLogOut={setLogOut}  />  } 
+     
      <Routes>
-     {/* <Route  element={<Header/>}/> */}
      <Route exact  path="/" element={<Home/>}/>
      <Route path="/about" element={<About/>}/>
      <Route path="/packages" element={<Packages/>}/>
@@ -40,10 +48,7 @@ function App() {
      
      </BrowserRouter>
 
-     {/* <Header/>
-      <Home/>
-      <About/>
-      <Footer/> */}
+   
     </div>
   );
 }

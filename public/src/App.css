@@ -78,3 +78,7 @@
   justify-content: center;
   align-items: center;
  }
+
+ .logErr{
+  color: red;
+ }

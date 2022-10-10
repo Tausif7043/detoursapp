@@ -1,38 +1,75 @@
-import React,{useState} from 'react'
+import React,{useState , useEffect} from 'react'
 import Button from "react-bootstrap/Button";
-
+import * as Yup from "yup";
 import Form from "react-bootstrap/Form";
 // import rocket from "../src/rocket.png";
-
+import en from "../../localization/en";
 import {useFormik} from 'formik'
+import axios from "axios";
+import {json, useNavigate} from "react-router-dom"
 
-import {bookingSchema} from "../../schemas"
 
 const initialValues ={
-  lemail:"",
-  lpassword:"",
+  email:"",
+  password:"",
  
 }
 
-function Conditions() {
-  const formik=  useFormik({
-    initialValues : initialValues,
-    validationSchema:bookingSchema,
-    onSubmit:(value,action)=>{
-        console.log('submit value',value);
-        action.resetForm();
-    }
- })
+function Conditions(props) {
+  const navigate = useNavigate()
+
+  const [user, setUser] = useState({ 
+    email: "",
+    password: "",
+    
+  });
+
+
+  const logData = () => {
+    axios
+      .post("http://localhost:5000/api/auth/login", values)
+      .then((res) => {
+       props.setLog(res.data.user)
+        navigate('/', { replace: true })
+        localStorage.setItem('logInData',JSON.stringify(res.data.user))
+     
+      })
+      .catch((err) => {});
+     
+    };
+ 
+  const validation = Yup.object({
+    
+    email: Yup.string().email(en.emailValidation).required("Required"),
+    password: Yup.string()
+      .min(8, "Password must be 8 characters long")
+      .required("Required"), 
+  });
+
+  
+ const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+ useFormik({
+   initialValues: initialValues,
+   validationSchema: validation,
+   onSubmit: (value) => {
+    logData();
+     setUser(value);
+     props.log()
+    
+     //  action.resetForm()
+   },
+ });
   return (
     <div >
-    <Form onSubmit={formik.handleSubmit} style={{ marginTop: "40px" }}>
+   
+    <Form method="POST" onSubmit={handleSubmit} style={{ marginTop: "40px" }}>
               <Form.Group className="mb-3" >
-                <Form.Control type="email" placeholder="Email" style={formik.errors.lemail && formik.touched.lemail ? {border:"2px solid red"}:{}} name="lemail" value={formik.values.lemail} onChange={formik.handleChange}  />
-                { formik.errors.lemail && formik.touched.lemail ? (<p className="errors">{formik.errors.lemail}</p>) : null}
+                <Form.Control type="email" placeholder="Email" style={errors.email && touched.email ? {border:"2px solid red"}:{}} name="email" value={values.email} onChange={handleChange} onBlur={handleBlur}  />
+                { errors.email && touched.email ? (<p className="errors">{errors.email}</p>) : null}
               </Form.Group>
               <Form.Group className="mb-3 my-4" >
-                <Form.Control type="password" name='lpassword'  placeholder="Password" style={formik.errors.lpassword && formik.touched.lpassword ? {border:"2px solid red"}:{}} value={formik.values.lpassword} onChange={formik.handleChange}  />
-              { formik.errors.lpassword && formik.touched.lpassword ? (<p className="errors">{formik.errors.lpassword}</p>) : null}
+                <Form.Control type="password" name='password'  placeholder="Password" style={errors.password && touched.password ? {border:"2px solid red"}:{}} value={values.password} onChange={handleChange}  onBlur={handleBlur} />
+              { errors.password && touched.password ? (<p className="errors">{errors.password}</p>) : null}
               </Form.Group>
 
               <Button
@@ -45,6 +82,7 @@ function Conditions() {
                   border: "none",
                   borderRadius: 25,
                 }}
+              
               >
                 Login
               </Button>

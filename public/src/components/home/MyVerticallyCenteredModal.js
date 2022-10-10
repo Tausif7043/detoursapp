@@ -7,10 +7,11 @@ import Form from "react-bootstrap/Form";
 import { IoMdRocket } from "react-icons/io";
 import { useFormik } from "formik";
 import axios from "axios";
-import { bookingSchema } from "../../schemas";
 import Conditions from "./Conditions";
 // import {useHistory} from 'react-router-dom'
-
+import * as Yup from "yup";
+import en from "../../localization/en";
+import {useNavigate} from "react-router-dom"
 const initialValues = {
   email: "",
   password: "",
@@ -21,8 +22,7 @@ const initialValues = {
 };
 
 function MyVerticallyCenteredModal(props) {
-  // const signUp=()=>{
-  // const history = useHistory()
+  const navigate = useNavigate()
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -34,24 +34,47 @@ function MyVerticallyCenteredModal(props) {
 
   const postData = () => {
     axios
-      .post("http://localhost:4000/api/auth/register", user)
-      .then((res) => { 
+      .post("http://localhost:5000/api/auth/register", values)
+      .then((res) => { props.setLoginUser(res.data)
+        navigate('/', { replace: true })
+        
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>{alert(err.message)});
   };
-
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  const validation = Yup.object({
+    name: Yup.string().min(2).max(25).required("Required"),
+    email: Yup.string().email(en.emailValidation).required("Required"),
+    phone: Yup.string()
+      .required("Required")
+      .matches(phoneRegExp, "Phone number is not valid")
+      .min(10, "to short")
+      .max(10, "to long"),
+    password: Yup.string()
+      .min(8, "Password must be 8 characters long")
+      .required("Required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Required"),
+    condition: Yup.boolean()
+      .oneOf([true], "Please accept terms & condition ")
+      .required("Please accept terms & condition "),
+  });
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: initialValues,
-      validationSchema: bookingSchema,
+      validationSchema: validation,
       onSubmit: (value) => {
-        setUser(value);
         postData();
-        // actions.setSubmitting(true);
-        // resetForm()
+        setUser(value);
+        props.setLogOut(values)
+       
+        
+        
       },
     });
-
+    
   const [condition, setCondtion] = useState("demo");
   const checkCondition = () => {
     setCondtion("conditionBox");
@@ -60,15 +83,18 @@ function MyVerticallyCenteredModal(props) {
     setCondtion("demo");
   };
 
+ const [logIn , setLogIn] = useState([])
+const log = ()=>{setLogIn(!props.loginUser._id ?"Incorrect Email id or Password" :"")}
   return (
     <>
-      <Modal
+   {props.loginUser._id ?"":   <Modal
         {...props}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-      >
+        >
         <Modal.Body>
+        
           <div className="conditionContainer">
             <div className={`${condition}`}>
               <h3 className="text-right" onClick={removeondition}>
@@ -95,11 +121,12 @@ function MyVerticallyCenteredModal(props) {
               style={{ backgroundColor: "white", padding: 60, width: "50%" }}
             >
               <h2 style={{ textAlign: "center" }}>Login</h2>
-              <Conditions />
+              <p className="logErr">{logIn}</p>
+              <Conditions setLog = {props.setLoginUser} log={log} setLogOut={ props.setLogOut} />
             </div>
             <div style={{ backgroundColor: "red", padding: 60, width: "50%" }}>
               <h2 style={{ textAlign: "center", color: "white" }}>Register</h2>
-
+               
               <Form
                 method="POST"
                 onSubmit={handleSubmit}
@@ -230,7 +257,8 @@ function MyVerticallyCenteredModal(props) {
                     background: "white",
                     border: "none",
                     borderRadius: 25,
-                  }}
+                  }} 
+                  
                 >
                   Register
                 </Button>
@@ -246,7 +274,7 @@ function MyVerticallyCenteredModal(props) {
             </div>
           </div>
         </Modal.Body>
-      </Modal>
+      </Modal>}
     </>
   );
 }

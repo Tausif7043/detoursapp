@@ -25,7 +25,7 @@ const UserSchema = new mongoose.Schema({
     deleted: { type: Boolean, default: false },
     access_token: { type: String },
     selectedLanguage: { type: String }, 
-    isVerified: { type: Boolean, default: false },
+    isVerified: { type: Boolean, default: true },
     isLoggedIn: { type: Boolean, default: false },
     loggedInTime: { type: Date },
     lastActivityTime: { type: Date },

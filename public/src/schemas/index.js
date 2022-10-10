@@ -9,7 +9,7 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 //   .matches(phoneRegExp, 'Phone number is not valid')
 //   .min(10, "to short")
 //   .max(10, "to long"),
-export const bookingSchema = Yup.object({
+export const bookingSchema = Yup.object().shape({
     destination:Yup.string().min(2).max(25).required("Please enter your destination"),
     // date:Yup.string().min(8).max(8).required("Please enter Date"),
     no_of_passenger:Yup.number().min(1).required("Enter no. of passenger"),

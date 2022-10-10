@@ -45,7 +45,9 @@ var mongoose = require('mongoose');
 mongoose.Promise = require('q').Promise;
 
 var connect = mongoose.connect(process.env.DB_URI, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    family:4,
 });
 var basename = path.basename(module.filename);
 var db = {};

@@ -7,18 +7,26 @@ import { Link } from 'react-router-dom'
 import axios from "axios";
 import {useNavigate} from "react-router-dom"
 
-function Header(props) {
-  const [modalShow, setModalShow] = useState(false);
- 
-
-
+function HeaderLogout(props) {
+    
+     const log =props.logOut
+    const navigate = useNavigate()
+    const logOutData = () => {
+      axios
+        .post("http://localhost:5000/api/auth/logout",log)
+        .then((res) => { 
+        navigate('/', { replace: true }) 
+       
+        props.setTogle(!props.togle)
+        window.location.reload()
+       })
+        .catch((err) => {});
   
+      
+    };
+
   return (
     <div>
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)} 
-        setLoginUser={props.setLoginUser} loginUser={props.loginUser} setLogOut={props.setLogOut}/>
       <header>
         <div className="main_menu_iner">
           <div className="container">
@@ -50,7 +58,7 @@ function Header(props) {
                         {/* <a className="nav-link" href="index.html">
                           Home
                         </a> */}
-                        <Link className="nav-link" to='/' >Home</Link>
+                        <Link className="nav-link" to='/' refr >Home</Link>
                       </li>
                       <li className="nav-item">
                         {/* <a className="nav-link" href="about.html">
@@ -127,6 +135,13 @@ function Header(props) {
 
                      <Link className="nav-link" to='/contact' >contact</Link>
                       </li>
+                      <li className="nav-item">
+                        {/* <a className="nav-link" href="contact.html">
+                          Contact
+                        </a> */}
+
+                     <Link className="nav-link" to='/contact' >Trips</Link>
+                      </li>
                     </ul>
                   </div>
 
@@ -134,10 +149,12 @@ function Header(props) {
                    <Button
                       className="btn_1 d-none d-lg-block button1"
                       variant="primary"
-                      onClick={() => setModalShow(true)}
+                    onClick={logOutData}
                     >
-                      Login/Sign Up
+                      Logout
                     </Button>
+                      
+                    
                   </div>
                 </nav>
               </div>
@@ -145,8 +162,8 @@ function Header(props) {
           </div>
         </div>
       </header>
-    </div>
+     </div>
   );
 }
 
-export default Header;
+export default HeaderLogout;
