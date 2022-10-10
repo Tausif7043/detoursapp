@@ -18,21 +18,27 @@ import BlogDetailSection from "./components/blogdetail/BlogDetailSection";
 import BlogDetail from "./pages/BlogDetail";
 import TopPlace from "./pages/TopPlace";
 import TourDetail from "./pages/TourDetail";
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import HeaderLogout from "./components/home/HeaderLogout";
-
-
 
 function App() {
  
   const [loginUser,setLoginUser] = useState({})
   const [logOut,setLogOut] = useState({})
-  const [togle,setTogle] = useState(true)
+  const [togle,setTogle] = useState({})
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("logInData");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setTogle(foundUser);
+    }
+  }, []);
   return (
     <div >
       <BrowserRouter>
-      {loginUser._id  && togle ? <HeaderLogout logOut={logOut} togle={togle} setTogle={setTogle}/>:
-      <Header setLoginUser = {setLoginUser} loginUser={loginUser} setLogOut={setLogOut}  />  } 
+      { loginUser._id ||  togle.token  ? <HeaderLogout logOut={logOut} togle={togle} setTogle={setTogle}/>:
+      <Header setLoginUser = {setLoginUser} loginUser={loginUser} setLogOut={setLogOut}   />  } 
      
      <Routes>
      <Route exact  path="/" element={<Home/>}/>
@@ -48,7 +54,10 @@ function App() {
      
      </BrowserRouter>
 
-   
+     {/* <Header/>
+      <Home/>
+      <About/>
+      <Footer/> */}
     </div>
   );
 }
