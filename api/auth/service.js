@@ -56,7 +56,7 @@ class AuthService {
     updateUser(conditions, update) {
         console.log("Condtion",conditions);
         console.log("Udatesecond",update);
-        return User.updateMany(conditions, update);
+        return User.findOneAndUpdate(conditions,update );
     }
    
 

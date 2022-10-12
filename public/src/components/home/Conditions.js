@@ -34,7 +34,7 @@ function Conditions(props) {
         localStorage.setItem('logInData',JSON.stringify(res.data.user))
      
       })
-      .catch((err) => {});
+      .catch((err) => {console.log("err", err.response.data.message);});
      
     };
  

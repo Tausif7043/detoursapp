@@ -75,6 +75,7 @@ class AuthClass {
       entity.otp = Math.floor(1000 + Math.random() * 9000);
       let token = this.generateJWT(entity);
       console.log("token", token);
+      entity.isLoggedIn=true;
       let user = await service.registerUser(entity);
       console.log(user);
       if (!user) {

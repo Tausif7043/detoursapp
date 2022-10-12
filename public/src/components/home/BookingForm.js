@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {useFormik} from 'formik'
 import {bookingSchema} from "../../schemas"
 import '../../App.css'
@@ -13,6 +13,7 @@ const initialValues ={
     inlineRadio:""
 }
 function BookingForm() {
+
 
  const {values,errors,touched,handleBlur,handleChange,handleSubmit}=  useFormik({
         initialValues : initialValues,
@@ -98,7 +99,7 @@ function BookingForm() {
 <p className='errors'>{errors.inlineRadio}</p>
 </div>
 <div className="form_btn my-3">    
-<button  className="btn_1 button1" type='submit'>Get Quotes</button>
+<button  className="btn_1 button1" type='submit' >Get Quotes</button>
 
 </div>
 </div>
